@@ -1,11 +1,13 @@
-import { View, Text } from 'react-native'
+import React, { useMemo } from 'react'
 import { defaultStyles } from '@/styles'
-import React from 'react'
 import { ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { TracksList } from 'app/components/TracksList'
 import { screenPadding } from '@/constants/tokens'
 import { useNavigationSearch } from '@/hooks/useNavigationSearch'
+import { trackTitleFilter } from '@/helps/filter'
+import library from '@/assets/data/library.json'
+
 export default function SongsScreen() {
 	const search = useNavigationSearch({
 		searchBarOptions: {
@@ -13,14 +15,18 @@ export default function SongsScreen() {
 		},
 	})
 
+	const filteredTracks = useMemo(() => {
+		if (!search) return library
+
+		return library.filter(trackTitleFilter(search))
+	}, [search, library])
 	return (
 		<SafeAreaView style={defaultStyles.container}>
-			{search}
 			<ScrollView
 				contentInsetAdjustmentBehavior="automatic"
 				style={{ paddingHorizontal: screenPadding.horizontal }}
 			>
-				<TracksList scrollEnabled={false} />
+				<TracksList tracks={filteredTracks} scrollEnabled={false} />
 			</ScrollView>
 		</SafeAreaView>
 	)

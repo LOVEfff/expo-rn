@@ -4,13 +4,16 @@ import { colors } from './tokens'
 export const StackScreenWithSearchBar: NativeStackNavigationOptions = {
 	headerLargeTitle: true,
 	headerStyle: {
-		backgroundColor: colors.background,
+		// backgroundColor: colors.background,
+		backgroundColor: '#282c34',
+	},
+	headerLargeStyle: {
+		backgroundColor: 'red',
 	},
 	headerLargeTitleStyle: {
 		color: colors.text,
 	},
 	headerTintColor: colors.text,
 	headerTransparent: false,
-	headerBlurEffect: 'prominent',
 	headerShadowVisible: false,
 }

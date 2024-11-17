@@ -4,10 +4,11 @@ import { unknowTrackImageUrl } from '@/constants/images'
 import { defaultStyles } from '@/styles'
 import { fontSize } from '@/constants/tokens'
 import { colors } from '@/constants/tokens'
+import { Track } from 'react-native-track-player'
 import { Image } from 'react-native'
 
 export type TrackListItemProps = {
-	track: { title: string; image?: string; artist?: string }
+	track: Track
 }
 
 export const TracksListItem = ({ track }: TrackListItemProps) => {
@@ -19,7 +20,7 @@ export const TracksListItem = ({ track }: TrackListItemProps) => {
 				<View>
 					<Image
 						source={{
-							uri: track.image ?? unknowTrackImageUrl,
+							uri: track.artwork ?? unknowTrackImageUrl,
 						}}
 						style={{ ...styles.trackArtworkImage, opacity: isActiveTrack ? 0.6 : 1 }}
 					/>
