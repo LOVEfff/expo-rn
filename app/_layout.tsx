@@ -1,7 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
-import { Stack } from 'expo-router'
+import { Stack, SplashScreen } from 'expo-router'
+import { useCallback } from 'react'
+import { useTrackPlayerEvents } from 'react-native-track-player'
+import { useSetupTrackPlayer } from '@/hooks/useSetupTrackPlayer'
+import { useLogTrackPlayerState } from '@/hooks/useLogTrackPlayerState'
+
+SplashScreen.preventAutoHideAsync()
 
 const RootNacigate = () => {
 	return (
@@ -12,6 +17,15 @@ const RootNacigate = () => {
 }
 
 export default function App() {
+	useLogTrackPlayerState()
+	const handleTrackPlayerLoaded = useCallback(() => {
+		SplashScreen.hideAsync()
+	}, [])
+
+	useSetupTrackPlayer({
+		onLoad: handleTrackPlayerLoaded,
+	})
+
 	return (
 		<SafeAreaProvider>
 			<RootNacigate />
@@ -19,25 +33,3 @@ export default function App() {
 		</SafeAreaProvider>
 	)
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: 'center',
-		padding: 24,
-	},
-	main: {
-		flex: 1,
-		justifyContent: 'center',
-		maxWidth: 960,
-		marginHorizontal: 'auto',
-	},
-	title: {
-		fontSize: 64,
-		fontWeight: 'bold',
-	},
-	subtitle: {
-		fontSize: 36,
-		color: '#38434D',
-	},
-})

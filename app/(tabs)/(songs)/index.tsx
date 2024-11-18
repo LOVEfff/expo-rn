@@ -11,7 +11,7 @@ import library from '@/assets/data/library.json'
 export default function SongsScreen() {
 	const search = useNavigationSearch({
 		searchBarOptions: {
-			placeholder: 'Find in songs',
+			placeholder: 'Find in songssss',
 		},
 	})
 
