@@ -10,6 +10,7 @@ const ItemDivider = () => {
 }
 
 export const TracksList = ({ tracks, ...flatlistProps }: TracksListProps) => {
+	const handleOnTrackSelected = () => {}
 	return (
 		<FlatList
 			data={tracks}
@@ -17,7 +18,10 @@ export const TracksList = ({ tracks, ...flatlistProps }: TracksListProps) => {
 			ItemSeparatorComponent={ItemDivider}
 			ListFooterComponent={ItemDivider}
 			renderItem={({ item: track }: any) => (
-				<TracksListItem track={{ ...track, image: track.artwork }} />
+				<TracksListItem
+					track={{ ...track, image: track.artwork }}
+					onTrackSelected={handleOnTrackSelected}
+				/>
 			)}
 			{...flatlistProps}
 		/>

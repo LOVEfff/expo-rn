@@ -4,20 +4,31 @@ import { unknowTrackImageUrl } from '@/constants/images'
 import { defaultStyles } from '@/styles'
 import { fontSize } from '@/constants/tokens'
 import { colors } from '@/constants/tokens'
-import { Track } from 'react-native-track-player'
+import { Track, useActiveTrack } from 'react-native-track-player'
 import { Image } from 'react-native'
+import { Entypo, Ionicons } from '@expo/vector-icons'
 
 export type TrackListItemProps = {
 	track: Track
+	onTrackSelected: (track: Track) => void
 }
 
-export const TracksListItem = ({ track }: TrackListItemProps) => {
-	const isActiveTrack = false
+export const TracksListItem = ({
+	track,
+	onTrackSelected: handleTrackSelect,
+}: TrackListItemProps) => {
+	const isActiveTrack = useActiveTrack()?.url === track.url
 
 	return (
-		<TouchableHighlight>
+		<TouchableHighlight onPress={() => handleTrackSelect(track)}>
 			<View style={styles.trackItemContainer}>
 				<View>
+					{/* <FastImage
+						source={{
+							uri: track.artwork ?? unknowTrackImageUrl,
+							priority: FastImage.priority.normal,
+						}}
+					/> */}
 					<Image
 						source={{
 							uri: track.artwork ?? unknowTrackImageUrl,
@@ -25,20 +36,31 @@ export const TracksListItem = ({ track }: TrackListItemProps) => {
 						style={{ ...styles.trackArtworkImage, opacity: isActiveTrack ? 0.6 : 1 }}
 					/>
 				</View>
-				{/* title artist */}
-				<View>
-					<Text
-						numberOfLines={1}
-						style={{ ...styles.trackTitle, color: isActiveTrack ? colors.primary : colors.text }}
-					>
-						{track.title}
-					</Text>
-
-					{track.artist && (
-						<Text numberOfLines={1} style={styles.trackAtistText}>
-							{track.artist}
+				<View
+					style={{
+						flex: 1,
+						flexDirection: 'row',
+						justifyContent: 'space-between',
+						alignItems: 'center',
+					}}
+				>
+					{/* title artist */}
+					<View>
+						<Text
+							numberOfLines={1}
+							style={{ ...styles.trackTitle, color: isActiveTrack ? colors.primary : colors.text }}
+						>
+							{track.title}
 						</Text>
-					)}
+
+						{track.artist && (
+							<Text numberOfLines={1} style={styles.trackAtistText}>
+								{track.artist}
+							</Text>
+						)}
+					</View>
+
+					<Entypo name="dots-three-horizontal" size={18} color={colors.icon} />
 				</View>
 			</View>
 		</TouchableHighlight>

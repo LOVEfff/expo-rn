@@ -17,7 +17,6 @@ const RootNacigate = () => {
 }
 
 export default function App() {
-	useLogTrackPlayerState()
 	const handleTrackPlayerLoaded = useCallback(() => {
 		SplashScreen.hideAsync()
 	}, [])
@@ -25,6 +24,8 @@ export default function App() {
 	useSetupTrackPlayer({
 		onLoad: handleTrackPlayerLoaded,
 	})
+
+	useLogTrackPlayerState()
 
 	return (
 		<SafeAreaProvider>
